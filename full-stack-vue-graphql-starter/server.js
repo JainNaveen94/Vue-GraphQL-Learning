@@ -1,4 +1,18 @@
 const {ApolloServer, gql} = require('apollo-server');
+const mongoose = require('mongoose');
+
+/** Just to Read Environment Variable file Having Mongo DB URI Entry */
+require('dotenv').config({path: 'variable.env'})
+
+/** Mongo DB Data Base Configuration */
+mongoose
+.connect(process.env.MONGO_URI, {useUnifiedTopology: true})
+.then(()=> {
+    console.log("Database Connected Successfully");
+})
+.catch(err => {
+    console.error("Database Not Connected because of " + err);
+})
 
 /** Data To Be Used To Perform Queries */
 const todo = [
