@@ -1,14 +1,11 @@
 <template>
-<v-app>
-  <div style="padding:30px">
+  <v-container>
     <h1>Home</h1>
-    <v-btn color="primary">Submit</v-btn>
-  </div>
-</v-app>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: 'home'
-}
+  name: "home",
+};
 </script>
