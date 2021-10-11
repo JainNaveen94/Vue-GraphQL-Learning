@@ -1,11 +1,11 @@
 <template>
-  <v-app class="app-background">
+  <v-app>
     <!-- Vertical Nav Drawer -->
     <v-navigation-drawer app temporary fixed v-model="sideNav">
       <!-- Toolbar for Main Icon and Title -->
       <v-toolbar color="error" dark flat>
         <!-- Navigation Icon -->
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="toggleNavDrawer"></v-app-bar-nav-icon>
 
         <!-- Title of Side Drawer-->
         <router-link to="/" tag="span" style="cursor: pointer">
@@ -79,7 +79,7 @@
 
     <!-- App Content -->
     <main>
-      <v-container class="mt-16">
+      <v-container class="mt-16 ml-0">
         <transition name="fade">
           <router-view />
         </transition>
@@ -100,15 +100,15 @@ export default {
     horizontalNavItems() {
       return [
         { icon: "mdi-message", title: "Posts", link: "/posts" },
-        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
-        { icon: "mdi-grease-pencil", title: "Sign Up", link: "/signup" },
+        { icon: "mdi-lock-open", title: "Sign In", link: "/sign_in" },
+        { icon: "mdi-grease-pencil", title: "Sign Up", link: "/sign_up" },
       ];
     },
     verticalNavDrawerItem() {
       return [
         { icon: "mdi-message", title: "Posts", link: "/posts" },
-        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
-        { icon: "mdi-grease-pencil", title: "Sign Up", link: "/signup" },
+        { icon: "mdi-lock-open", title: "Sign In", link: "/sign_in" },
+        { icon: "mdi-grease-pencil", title: "Sign Up", link: "/sign_up" },
       ];
     },
   },
@@ -122,7 +122,19 @@ export default {
 </script>
 
 <style>
-.app-background {
-  background-color: #e3e3ee;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>
