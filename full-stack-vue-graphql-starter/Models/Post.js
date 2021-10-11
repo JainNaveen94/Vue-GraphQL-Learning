@@ -25,6 +25,10 @@ const PostSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    /** For Populate Method in Resolvers
+     * property ('createdBy') = path
+     * ref ('User') = model
+     */
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  /** For Populate Method in Resolver
+   * property ('favorites') = path
+   * ref 'Post' = model
+   */
   favorites: {
     type: [mongoose.Schema.Types.ObjectId],
     requiredd: true,
