@@ -1,9 +1,18 @@
-const {ApolloServer, gql} = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 
 /** MongoDB Schemas */
 const User = require('./Models/User');
 const Post = require('./Models/Post');
+
+/** Other Required Packages for File & Directory Stuff */
+const fs = require('fs');
+const path = require('path');
+
+/** GraphQL Configuration of Typedefs */
+const filePath = path.join(__dirname, 'typeDefs.gql');
+const typeDefs = fs.readFileSync(filePath, 'utf-8');
+const resolvers = require('./resolver');
 
 /** Just to Read Environment Variable file Having Mongo DB URI Entry */
 require('dotenv').config({path: 'variable.env'})
@@ -18,49 +27,10 @@ mongoose
     console.error("Database Not Connected because of " + err);
 })
 
-/** Data To Be Used To Perform Queries */
-// const todo = [
-//     {task: "Learning GraphQL", completed: false},
-//     {task: "Learning Typescript", completed: true},
-//     {task: "Learning Jest", completed: false}
-// ];
-
-/** GraphQL Typedefs */
-const typeDefs = gql`
-
-type Todo {
-        task: String,
-        completed: Boolean
-    }
-
-    type Query {
-        getAllTodos: [Todo]
-    }
-
-    type Mutation {
-        addTodo(task: String, completed: Boolean): Todo
-    }
-`;
-
-/** GraphQL Resolvers */
-// const resolvers = {
-//     Query : {
-//         getAllTodos: () => {
-//             return todo;
-//         },
-//     },
-//     Mutation : {
-//         addTodo: (_, {task, completed}) => {
-//             const newTodo = {task, completed};
-//             todo.push(newTodo);
-//             return newTodo;
-//         }
-//     }
-// };
-
 /** Apollo Server Initialization */
 const server = new ApolloServer({
     typeDefs,
+    resolvers,
     context: {
         User,
         Post
