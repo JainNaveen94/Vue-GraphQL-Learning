@@ -1,9 +1,43 @@
 <template>
-  <v-app>
+  <v-app class="app-background">
+    <!-- Vertical Nav Drawer -->
+    <v-navigation-drawer app temporary fixed v-model="sideNav">
+      <!-- Toolbar for Main Icon and Title -->
+      <v-toolbar color="error" dark flat>
+        <!-- Navigation Icon -->
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+        <!-- Title of Side Drawer-->
+        <router-link to="/" tag="span" style="cursor: pointer">
+          <h1 class="title pl-4">NavShare</h1>
+        </router-link>
+      </v-toolbar>
+
+      <!-- Use for Vertical Division with separation Line -->
+      <v-divider></v-divider>
+
+      <!-- List of Items on Left Navigation Drawer -->
+      <v-list dense nav>
+        <v-list-item
+          ripple
+          v-for="item in verticalNavDrawerItem"
+          :key="item.title"
+          :to="item.link"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
     <!-- Horizontal Nav Bar  -->
     <v-app-bar style="flex: 0" fixed color="primary" dark>
       <!-- Navigation Icon -->
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toggleNavDrawer"></v-app-bar-nav-icon>
 
       <!-- Title of Navigation Bar -->
       <v-toolbar-title class="hidden-xs-only">
@@ -57,6 +91,11 @@
 <script>
 export default {
   name: "app",
+  data() {
+    return {
+      sideNav: false,
+    };
+  },
   computed: {
     horizontalNavItems() {
       return [
@@ -65,6 +104,25 @@ export default {
         { icon: "mdi-grease-pencil", title: "Sign Up", link: "/signup" },
       ];
     },
+    verticalNavDrawerItem() {
+      return [
+        { icon: "mdi-message", title: "Posts", link: "/posts" },
+        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
+        { icon: "mdi-grease-pencil", title: "Sign Up", link: "/signup" },
+      ];
+    },
+  },
+  methods: {
+    toggleNavDrawer() {
+      /** Action to Toggle the Navigation Drawer */
+      this.sideNav = !this.sideNav;
+    },
   },
 };
 </script>
+
+<style>
+.app-background {
+  background-color: #e3e3ee;
+}
+</style>
