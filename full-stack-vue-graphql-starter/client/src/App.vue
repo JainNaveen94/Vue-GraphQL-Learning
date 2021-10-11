@@ -6,13 +6,13 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
       <!-- Title of Navigation Bar -->
-      <v-toolbar-title>
+      <v-toolbar-title class="hidden-xs-only">
         <router-link to="/" tag="span" style="cursor: pointer">
-          Nav Share
+          NavShare
         </router-link>
       </v-toolbar-title>
 
-      <!-- User for Spacing -->
+      <!-- Use for Spacing -->
       <v-spacer></v-spacer>
 
       <!-- Search Bar -->
@@ -26,18 +26,18 @@
         hide-details
       ></v-text-field>
 
-      <!-- User for Spacing -->
+      <!-- Use for Spacing -->
       <v-spacer></v-spacer>
 
       <!-- Nav Menu Items -->
-      <v-toolbar-items>
+      <v-toolbar-items class="hidden-xs-only">
         <v-btn
           text
           v-for="item in horizontalNavItems"
           :key="item.title"
           :to="item.link"
         >
-          <v-icon left>{{ item.icon }}</v-icon>
+          <v-icon left class="hidden-sm-only">{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
