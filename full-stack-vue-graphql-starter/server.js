@@ -1,18 +1,19 @@
+/** Import Apollo Server and Moongose Library */
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 
-/** MongoDB Schemas */
+/** Import MongoDB Schemas for mlabs moongose DB Server */
 const User = require('./Models/User');
 const Post = require('./Models/Post');
 
-/** Other Required Packages for File & Directory Stuff */
+/** Import Relevent Package to Read the GraphQL Files */
 const fs = require('fs');
 const path = require('path');
+const filePath = path.join(__dirname, './GraphQL/TypeDefs/typeDefs.gql');
 
-/** GraphQL Configuration of Typedefs */
-const filePath = path.join(__dirname, 'typeDefs.gql');
+/** GraphQL Configuration of Typedefs & Resolver */
 const typeDefs = fs.readFileSync(filePath, 'utf-8');
-const resolvers = require('./resolver');
+const resolvers = require('./GraphQL/Resolver/resolver');
 
 /** Just to Read Environment Variable file Having Mongo DB URI Entry */
 require('dotenv').config({path: 'variable.env'})
@@ -27,7 +28,7 @@ mongoose
     console.error("Database Not Connected because of " + err);
 })
 
-/** Apollo Server Initialization */
+/** Apollo/GraphQL Server Initialization using typeDefs, resolvers and context */
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -37,6 +38,7 @@ const server = new ApolloServer({
     }
 });
 
+/** Server Listing Configuration */
 server.listen().then(({url}) => {
     console.log("Server Listen on the Address : " + url);
 });
