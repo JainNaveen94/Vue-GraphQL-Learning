@@ -52,7 +52,7 @@
       <!-- Search Bar -->
       <v-text-field
         flex
-        label="Search Post"
+        label="Search Posts"
         prepend-inner-icon="mdi-magnify"
         placeholder="Search Posts"
         color="accent"
