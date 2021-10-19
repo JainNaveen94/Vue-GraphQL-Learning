@@ -1,5 +1,7 @@
 <template>
   <v-container text-xs-center>
+    <!-- Spinner Component -->
+    <spinner :loading="loading"></spinner>
     <!-- Image Slider -->
     <v-flex xs12>
       <v-carousel v-if="posts.length > 0" v-bind="{ cycle: true }" interval="3000">
@@ -17,9 +19,13 @@
 
 <script>
 import { gql } from "apollo-boost";
+import Spinner from "./common/Spinner.vue";
 
 export default {
   name: "home",
+  components: {
+    Spinner
+  },
   data() {
     return {
       post: {},
@@ -31,6 +37,9 @@ export default {
   computed: {
     posts() {
       return this.$store.getters.POSTS;
+    },
+    loading() {
+      return this.$store.getters.LOADING;
     }
   },
   methods: {
