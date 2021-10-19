@@ -1,12 +1,12 @@
 <template>
   <v-container text-xs-center>
     <!-- Spinner Component -->
-    <spinner :loading="loading"></spinner>
+    <spinner :loading="LOADING"></spinner>
     <!-- Image Slider -->
     <v-flex xs12>
-      <v-carousel v-if="posts.length > 0" v-bind="{ cycle: true }" interval="3000">
+      <v-carousel v-if="POSTS.length > 0" v-bind="{ cycle: true }" interval="3000">
         <v-carousel-item
-          v-for="post in posts"
+          v-for="post in POSTS"
           :key="post._id"
           :src="post.imageUrl"
         >
@@ -18,8 +18,10 @@
 </template>
 
 <script>
-import { gql } from "apollo-boost";
+/** Common Component Imports */
 import Spinner from "./common/Spinner.vue";
+/** Library Imports */
+import { mapGetters } from "vuex";
 
 export default {
   name: "home",
@@ -35,12 +37,15 @@ export default {
     this.handleGetCarouselPosts();
   },
   computed: {
-    posts() {
-      return this.$store.getters.POSTS;
-    },
-    loading() {
-      return this.$store.getters.LOADING;
-    }
+    /** Legacy Method to Get the Data From the Stores */
+    // posts() {
+    //   return this.$store.getters.POSTS;
+    // },
+    // loading() {
+    //   return this.$store.getters.LOADING;
+    // },
+    /** Map Getter Will Get the Data For Us from the Vuex Store */
+    ...mapGetters(['LOADING','POSTS'])
   },
   methods: {
     handleGetCarouselPosts() {
