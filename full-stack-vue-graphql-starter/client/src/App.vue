@@ -52,7 +52,7 @@
       <!-- Search Bar -->
       <v-text-field
         flex
-        label="Search Post"
+        label="Search Posts"
         prepend-inner-icon="mdi-magnify"
         placeholder="Search Posts"
         color="accent"
@@ -79,7 +79,7 @@
 
     <!-- App Content -->
     <main>
-      <v-container class="mt-16 ml-0">
+      <v-container class="mt-16">
         <transition name="fade">
           <router-view />
         </transition>
