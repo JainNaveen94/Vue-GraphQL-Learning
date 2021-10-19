@@ -1,47 +1,26 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-/** Imports Related to Apollo GraphQL Queries */
-import { defaultClient as apolloClient } from "../main";
-import { gql } from "apollo-boost";
+// /** Imports Related to Apollo GraphQL Queries */
+// import { defaultClient as apolloClient } from "../main";
+// import { gql } from "apollo-boost";
+
+/** Import the other mini-stores */
+import posts from './modules/posts';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-  state: {
-    posts:[],
+  /** Vuex Store State which need to be Used or access or modified etc */
+  state: {},
+  /** Synchronous Setter to set/modify/delete the state or its respective values */
+  mutations: {},
+  /** Getter to Get the Values in Components */
+  getters: {},
+  /** Action are Asynchronous Methods to asynchronous calls mutations to perform task */
+  actions: {},
+  /** Modules are used to specify the smaller or mini stores */
+  modules: {
+    posts
   },
-  mutations: {
-    SET_POSTS: (state, payload) => {
-      state.posts = payload
-    }
-  },
-  getters: {
-    POSTS: state => state.posts
-  },
-  actions: {
-    getPosts: (context) => {
-      apolloClient
-        .query({
-          query: gql`
-            query {
-              getPosts {
-                _id
-                title
-                imageUrl
-                description
-                likes
-              }
-            }
-          `,
-        })
-        .then((res) => {
-          context.commit("SET_POSTS", res.data.getPosts);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-  },
-  modules: {},
 });
