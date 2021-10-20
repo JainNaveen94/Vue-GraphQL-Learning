@@ -15,7 +15,7 @@
 
     <!-- App Content -->
     <main>
-      <v-container class="mt-16">
+      <v-container class="mt-16 pt-16">
         <transition name="fade">
           <router-view />
         </transition>
