@@ -40,13 +40,13 @@ const UserSchema = new mongoose.Schema({
 });
 
 /** Used to Generate the Avatar For User */
-UserSchema.pre("save", (next) => {
-  this.avatar = `http://gravtar.com/avatar/${md5(this.username)}?d=identicon`;
+UserSchema.pre("save", function(next) {
+  this.avatar = `http://gravatar.com/avatar/${md5(this.username)}?d=identicon`;
   next();
 });
 
 /** Used to Encyrpt Password Before Save */
-UserSchema.pre("save", (next) => {
+UserSchema.pre("save", function(next) {
   // Check if the Entry is new or old
   if (!this.isModified("password")) {
     return next();

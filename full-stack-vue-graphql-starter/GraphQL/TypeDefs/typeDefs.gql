@@ -1,3 +1,6 @@
+#-- Type Definations of Type of Data we want from GraphQL --#
+
+# User Type
 type User {
   _id: ID
   username: String! @unique
@@ -8,6 +11,7 @@ type User {
   favorites: [Post]
 }
 
+# Post Type
 type Post {
   _id: ID
   title: String!
@@ -20,6 +24,7 @@ type Post {
   messages: [Message]
 }
 
+# Message Type
 type Message {
   _id: ID
   messageBody: String!
@@ -27,19 +32,32 @@ type Message {
   messageUser: User!
 }
 
+#-- Queries Type Defination which is to be Executed to fetch the Data (Initilization is there in Resolvers) --#
 type Query {
+  # Get the Single User
   getUser: User
+  # Get the List of User
   getUsers: [User]
+  # Get the Single Post
   getPost: Post
+  # Get the List of Post
   getPosts: [Post]
 }
 
+#-- Mutations Type Defination which is to be Mutate or Create/Modified/Delete the Data (Initilization is there in Resolvers) --#
 type Mutation {
+  # Create User Mutation
   signUpUser(
     username: String!, 
     email: String!, 
     password: String!
   ): User!
+  # Login User Mutation
+  signInUser(
+    username: String!,
+    password: String!,
+  ): User!
+  # Create Post Mutation
   addPost(
     title: String!
     imageUrl: String!
