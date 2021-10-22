@@ -1,6 +1,7 @@
 /** Import Apollo Server and Moongose Library */
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer, AuthenticationError } = require('apollo-server');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 /** Import MongoDB Schemas for mlabs moongose DB Server */
 const User = require('./Models/User');
@@ -28,14 +29,30 @@ mongoose
     console.error("Database Not Connected because of " + err);
 })
 
+/** Current User Verification using Token Received from Frontend Client */
+const getCurrentUser = async (token) => {
+    if(token) {
+        try {
+            let user = await jwt.verify(token, process.env.SECRET_KEY);
+        } catch(error) {
+            throw new AuthenticationError('User Session Expire, Please Login Again !!')
+        }
+    }
+};
+
 /** Apollo/GraphQL Server Initialization using typeDefs, resolvers and context */
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: {
-        User,
-        Post
-    }
+    context: async ({req}) => {
+        const token = req.headers['authorization'];
+        return { User, Post, currentUser: await getCurrentUser(token)};
+    },
+    /** Old Context */
+    // context: {
+    //     User,
+    //     Post
+    // }
 });
 
 /** Server Listing Configuration */
