@@ -19,7 +19,6 @@ module.exports = {
     },
     /** Get the Current User */
     getCurrentUser: async (_, args, { User, CurrentUser}) => {
-      console.log(CurrentUser)
       if(!CurrentUser) {
         return null;
       }

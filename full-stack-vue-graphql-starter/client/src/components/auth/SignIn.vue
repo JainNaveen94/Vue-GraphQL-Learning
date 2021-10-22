@@ -46,12 +46,27 @@
 </template>
 
 <script>
+/** Library Imports */
+import { mapGetters } from "vuex";
+
 export default {
   name: "SignIn",
   data() {
     return {
       username: "",
       password: "",
+      currentUser: null,
+    }
+  },
+  computed: {
+    ...mapGetters(["CURRENT_USER"])
+  },
+  watch: {
+    /** if User Exist then move to Home Page */
+    CURRENT_USER(value) {
+      if(value) {
+        this.$router.push("/");
+      }
     }
   },
   methods: {

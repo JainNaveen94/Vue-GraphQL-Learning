@@ -7,17 +7,12 @@ import vuetify from "./plugins/vuetify";
 
 /** Graph QL Related Imoports */
 // import ApolloClient from "apollo-boost";
-import DefaultClient from "./backend-client";
+import { DefaultClient as apolloClient } from "./backend-client";
 import VueApollo from "vue-apollo";
 Vue.use(VueApollo);
 
-// /** Setup ApolloClient */
-// export const defaultClient = new ApolloClient({
-//   uri: "http://localhost:4000/graphql",
-// });
-
 /** Define Providers for Vue Apollo */
-const apolloProvider = new VueApollo({ DefaultClient });
+const apolloProvider = new VueApollo({ apolloClient });
 
 Vue.config.productionTip = false;
 
@@ -29,6 +24,6 @@ new Vue({
   render: (h) => h(App),
   created() {
     // Execute Query to Fetch Current User
-    this.$store.dispatch('getCurrentUser');
-  }
+    this.$store.dispatch("getCurrentUser");
+  },
 }).$mount("#app");

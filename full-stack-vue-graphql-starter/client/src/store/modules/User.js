@@ -1,3 +1,5 @@
+import router from '../../router';
+
 /** Imports Related to Apollo GraphQL Queries */
 import { DefaultClient as apolloClient } from "../../backend-client";
 
@@ -30,6 +32,7 @@ import { USER_LOGIN, GET_CURRENT_USER } from "../../api-queries";
   let actions = {
     // User Sign Action
     signInUser: (context, payload) => {
+      localStorage.setItem('token', "");
       context.commit("SET_LOADING", true);
       apolloClient
         .mutate({
@@ -38,6 +41,8 @@ import { USER_LOGIN, GET_CURRENT_USER } from "../../api-queries";
         })
         .then((res) => {
             localStorage.setItem('token', res.data.signInUser.token);
+            // Just to Referesh the Page so that Current User is Set
+            router.go();
         })
         .catch((err) => {
           console.error(err);

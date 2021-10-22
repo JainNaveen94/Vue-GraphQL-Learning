@@ -1,5 +1,5 @@
 /** Imports Related to Apollo GraphQL Queries */
-import { DefaultClient as apolloClient } from "../../backend-client";
+import {DefaultClient as apolloClient} from "../../backend-client.js";
 
 /** Import POST Queries & Mutation */
 import { GET_POST } from "../../api-queries";
