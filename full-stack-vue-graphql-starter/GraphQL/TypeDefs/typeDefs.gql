@@ -32,6 +32,11 @@ type Message {
   messageUser: User!
 }
 
+# User Session Token
+type Token {
+  token: String!
+}
+
 #-- Queries Type Defination which is to be Executed to fetch the Data (Initilization is there in Resolvers) --#
 type Query {
   # Get the Single User
@@ -51,12 +56,12 @@ type Mutation {
     username: String!, 
     email: String!, 
     password: String!
-  ): User!
+  ): Token!
   # Login User Mutation
   signInUser(
     username: String!,
     password: String!,
-  ): User!
+  ): Token!
   # Create Post Mutation
   addPost(
     title: String!

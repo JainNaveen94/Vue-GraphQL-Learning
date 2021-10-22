@@ -31,7 +31,7 @@ import { GET_POST } from "../../api-queries";
     getPosts: (context) => {
       context.commit("SET_LOADING", true);
       apolloClient
-        .query(GET_POST)
+        .query({query: GET_POST})
         .then((res) => {
           context.commit("SET_POSTS", res.data.getPosts);
         })
