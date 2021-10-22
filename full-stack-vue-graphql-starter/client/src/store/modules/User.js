@@ -1,5 +1,5 @@
 /** Imports Related to Apollo GraphQL Queries */
-import { defaultClient as apolloClient } from "../../main";
+import { DefaultClient as apolloClient } from "../../backend-client";
 
 /** Import POST Queries & Mutation */
 import { USER_LOGIN } from "../../api-queries";
@@ -31,8 +31,7 @@ import { USER_LOGIN } from "../../api-queries";
             variables: payload
         })
         .then((res) => {
-            console.log(res.data);
-        //   context.commit("SET_POSTS", res.data.getPosts);
+            localStorage.setItem('token', res.data.signInUser.token);
         })
         .catch((err) => {
           console.error(err);
