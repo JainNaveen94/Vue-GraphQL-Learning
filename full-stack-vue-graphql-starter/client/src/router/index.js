@@ -13,6 +13,9 @@ import SignIn from "../components/auth/SignIn.vue";
 import SignUp from "../components/auth/SignUp.vue";
 import Profile from "../components/auth/Profile.vue";
 
+/** Auth Gaurd */
+import AuthGuard from "../AuthGuard";
+
 
 Vue.use(VueRouter)
 
@@ -35,7 +38,8 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    beforeEnter: AuthGuard,
   },
   {
     path: '/sign_in',

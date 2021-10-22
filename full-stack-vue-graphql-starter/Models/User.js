@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+// Generate Random Avatar Number
+const md5 = require("md5");
+// Used to Generate Hash Code Against Password
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -31,8 +35,35 @@ const UserSchema = new mongoose.Schema({
   favorites: {
     type: [mongoose.Schema.Types.ObjectId],
     requiredd: true,
-    ref: 'post'
+    ref: "post",
   },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+/** Used to Generate the Avatar For User */
+UserSchema.pre("save", function(next) {
+  this.avatar = `http://gravatar.com/avatar/${md5(this.username)}?d=identicon`;
+  next();
+});
+
+/** Used to Encyrpt Password Before Save */
+UserSchema.pre("save", function(next) {
+  // Check if the Entry is new or old
+  if (!this.isModified("password")) {
+    return next();
+  }
+  // Perform Encryption of Password
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      return next(err);
+    }
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) {
+        return next(err);
+      }
+      this.password = hash;
+      next();
+    });
+  });
+});
+
+module.exports = mongoose.model("User", UserSchema);

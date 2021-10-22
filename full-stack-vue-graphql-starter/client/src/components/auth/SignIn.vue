@@ -1,11 +1,82 @@
 <template>
-  <v-container>
-    <h1>Sign In Form Comming Soon ...... ($_$) </h1>
+  <v-container text-as-center text-xs-center mt-5 pt-5>
+
+    <!-- Sign In User Title-->
+    <v-layout row wrap>
+      <v-flex xs12 sm6 offset-sm3>
+        <h1>Welcome Back</h1>
+      </v-flex>
+    </v-layout>
+
+    <!-- Login Form -->
+    <v-layout row wrap>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card color="secondary" dark>
+          <v-container>
+            <v-form @submit.prevent="handlerUserLogin">
+              <!-- Username Input Field -->
+              <v-layout>
+                <v-flex xs12>
+                  <v-text-field v-model="username" prepend-icon="mdi-emoticon" label="Username" type="text" required></v-text-field>
+                </v-flex>
+              </v-layout>
+              <!-- Password Input Field -->
+              <v-layout>
+                <v-flex xs12>
+                  <v-text-field v-model="password" prepend-icon="mdi-security" label="Password" type="password" required></v-text-field>
+                </v-flex>
+              </v-layout>
+              <!-- Submit Button -->
+              <v-layout>
+                <v-flex xs12>
+                  <v-btn color="primary" type="submit">LogIn</v-btn>
+                  <h3>
+                    Don't have an account ?
+                    <router-link to="/sign_up"> SignUp</router-link>
+                  </h3>
+                </v-flex>
+              </v-layout>
+            </v-form>
+          </v-container>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    
   </v-container>
 </template>
 
 <script>
+/** Library Imports */
+import { mapGetters } from "vuex";
+
 export default {
   name: "SignIn",
+  data() {
+    return {
+      username: "",
+      password: "",
+      currentUser: null,
+    }
+  },
+  computed: {
+    ...mapGetters(["CURRENT_USER"])
+  },
+  watch: {
+    /** if User Exist then move to Home Page */
+    CURRENT_USER(value) {
+      if(value) {
+        this.$router.push("/");
+      }
+    }
+  },
+  methods: {
+    handlerUserLogin() {
+      /** Action to handle the User Login */
+      this.$store.dispatch('signInUser', {
+        username: this.username,
+        password: this.password
+      })
+    }
+  },
 };
 </script>

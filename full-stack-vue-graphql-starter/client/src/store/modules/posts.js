@@ -1,5 +1,5 @@
 /** Imports Related to Apollo GraphQL Queries */
-import { defaultClient as apolloClient } from "../../main";
+import {DefaultClient as apolloClient} from "../../backend-client.js";
 
 /** Import POST Queries & Mutation */
 import { GET_POST } from "../../api-queries";
@@ -31,7 +31,7 @@ import { GET_POST } from "../../api-queries";
     getPosts: (context) => {
       context.commit("SET_LOADING", true);
       apolloClient
-        .query(GET_POST)
+        .query({query: GET_POST})
         .then((res) => {
           context.commit("SET_POSTS", res.data.getPosts);
         })
