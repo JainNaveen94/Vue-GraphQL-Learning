@@ -78,4 +78,8 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
+
+.text-as-center {
+  text-align: center;
+}
 </style>

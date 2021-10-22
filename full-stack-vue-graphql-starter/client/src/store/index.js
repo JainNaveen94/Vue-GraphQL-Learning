@@ -7,6 +7,7 @@ import Vuex from "vuex";
 
 /** Import the other mini-stores */
 import posts from './modules/posts';
+import user from './modules/User';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ export const store = new Vuex.Store({
   actions: {},
   /** Modules are used to specify the smaller or mini stores */
   modules: {
-    posts
+    posts,
+    user
   },
 });

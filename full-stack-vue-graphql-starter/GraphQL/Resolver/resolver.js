@@ -49,7 +49,7 @@ module.exports = {
       if (!user) {
         throw new Error("User not Found");
       }
-      const isValidPassword = bcrypt.compare(password, user.password);
+      const isValidPassword = await bcrypt.compare(password, user.password);
       if (!isValidPassword) {
         throw new Error("Password is not Correct");
       }
