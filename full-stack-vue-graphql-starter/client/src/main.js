@@ -27,4 +27,8 @@ new Vue({
   vuetify,
   apolloProvider: apolloProvider,
   render: (h) => h(App),
+  created() {
+    // Execute Query to Fetch Current User
+    this.$store.dispatch('getCurrentUser');
+  }
 }).$mount("#app");

@@ -17,6 +17,18 @@ module.exports = {
       });
       return users;
     },
+    /** Get the Current User */
+    getCurrentUser: async (_, args, { User, CurrentUser}) => {
+      console.log(CurrentUser)
+      if(!CurrentUser) {
+        return null;
+      }
+      const currentUser = User.findOne({username: CurrentUser.username}).populate({
+        path: "favorites",
+        model: "Post",
+      });
+      return currentUser;
+    },
     /** Get the List of Post */
     getPosts: async (_, args, { Post }) => {
       const posts = await Post.find({}).sort({ createdDate: "Desc" }).populate({

@@ -33,7 +33,7 @@ mongoose
 const getCurrentUser = async (token) => {
     if(token) {
         try {
-            let user = await jwt.verify(token, process.env.SECRET_KEY);
+            return await jwt.verify(token, process.env.SECRET_KEY);
         } catch(error) {
             throw new AuthenticationError('User Session Expire, Please Login Again !!')
         }
@@ -46,7 +46,7 @@ const server = new ApolloServer({
     resolvers,
     context: async ({req}) => {
         const token = req.headers['authorization'];
-        return { User, Post, currentUser: await getCurrentUser(token)};
+        return { User, Post, CurrentUser: await getCurrentUser(token)};
     },
     /** Old Context */
     // context: {

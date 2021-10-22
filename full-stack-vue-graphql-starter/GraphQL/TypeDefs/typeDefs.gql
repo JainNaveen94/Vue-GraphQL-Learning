@@ -40,7 +40,7 @@ type Token {
 #-- Queries Type Defination which is to be Executed to fetch the Data (Initilization is there in Resolvers) --#
 type Query {
   # Get the Single User
-  getUser: User
+  getCurrentUser: User
   # Get the List of User
   getUsers: [User]
   # Get the Single Post
