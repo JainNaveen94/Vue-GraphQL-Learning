@@ -39,6 +39,21 @@
         <v-icon left class="hidden-sm-only">{{ item.icon }}</v-icon>
         {{ item.title }}
       </v-btn>
+
+      <!-- Profile Button -->
+        <v-btn text to="/profile" v-if="currentUser">
+          <v-icon class="hidden-sm-only" left>mdi-account-box</v-icon>
+          <v-badge right color="blue darken-2">
+            <span slot="badge">1</span>
+            Profile
+          </v-badge>
+        </v-btn>
+
+        <!-- Signout Button -->
+        <v-btn text v-if="currentUser" @click="$emit('handleSignoutUser')">
+          <v-icon class="hidden-sm-only" left>mdi-exit-to-app</v-icon>
+          Signout
+        </v-btn>
     </v-toolbar-items>
   </v-app-bar>
 </template>
@@ -53,6 +68,12 @@ export default {
         return [];
       },
     },
+    currentUser: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
   },
 };
 </script>

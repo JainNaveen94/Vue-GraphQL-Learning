@@ -9,7 +9,7 @@ import { USER_LOGIN, GET_CURRENT_USER } from "../../api-queries";
   /** Vuex Store State which need to be Used or access or modified etc */
   let state = {
     loading: false,
-    currentUser: {},
+    currentUser: null,
   };
 
   /** Synchronous Setter to set/modify/delete the state or its respective values */
@@ -19,6 +19,9 @@ import { USER_LOGIN, GET_CURRENT_USER } from "../../api-queries";
     },
     SET_CURRENT_USER: (state, payload) => {
       state.currentUser = payload
+    },
+    CLEAR_CURRENT_USER: (state) => {
+      state.currentUser = null;
     }
   };
 
@@ -50,6 +53,17 @@ import { USER_LOGIN, GET_CURRENT_USER } from "../../api-queries";
         .finally(() => {
           context.commit("SET_LOADING", false);
         });
+    },
+    // User Sign Out Action
+    signOutUser: async (context) => {
+      // Step 1 : Clear Current User
+      context.commit('CLEAR_CURRENT_USER');
+      // Step 2 : Clear token from Local Storage
+      localStorage.setItem('token', '');
+      // Step 3 : End the User Session
+      await apolloClient.resetStore();
+      // Step 4 : Kickout User from Private Page
+      router.push("/");
     },
     // Fetch Current User Action
     getCurrentUser: (context) => {

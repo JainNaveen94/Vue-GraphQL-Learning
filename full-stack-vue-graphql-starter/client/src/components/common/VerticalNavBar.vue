@@ -32,6 +32,14 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+
+      <!-- Signout Button -->
+        <v-list-item v-if="currentUser" @click="$emit('handleSignoutUser')">
+          <v-list-item-action>
+            <v-icon>mdi-exit-to-app</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>Signout</v-list-item-content>
+        </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -51,6 +59,12 @@ export default {
         return [];
       },
     },
+    currentUser: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
   },
 };
 </script>
