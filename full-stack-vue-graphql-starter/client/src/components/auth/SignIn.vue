@@ -59,11 +59,11 @@
                     :disabled="LOADING || !isValid"
                     color="primary"
                     type="submit"
-                    >LogIn</v-btn
+                    >Log In</v-btn
                   >
                   <h3>
                     Don't have an account ?
-                    <router-link to="/sign_up"> SignUp</router-link>
+                    <router-link to="/sign_up"> Sign Up</router-link>
                   </h3>
                 </v-flex>
               </v-layout>

@@ -22,7 +22,7 @@
             <v-form
               v-model="isValid"
               lazy-validation
-              ref="signup"
+              ref="signUp"
               @submit.prevent="handlerUserSignUp"
             >
               <!-- Username Input Field -->
@@ -85,11 +85,11 @@
                     :disabled="LOADING || !isValid"
                     color="primary"
                     type="submit"
-                    >SignUp</v-btn
+                    >Sign Up</v-btn
                   >
                   <h3>
                     Already have an account ?
-                    <router-link to="/sign_in"> SignIn</router-link>
+                    <router-link to="/sign_in"> Sign In</router-link>
                   </h3>
                 </v-flex>
               </v-layout>
@@ -145,11 +145,25 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["ERROR", "LOADING"]),
+    ...mapGetters(["ERROR", "LOADING", "CURRENT_USER"]),
+  },
+  watch: {
+    CURRENT_USER(value) {
+      if(value) {
+        this.$router.push("/");
+      }
+    }
   },
   methods: {
     handlerUserSignUp() {
       /** Action to Handle the Signup User */
+      if (this.$refs.signUp.validate()) {
+        this.$store.dispatch("signUpUser", {
+          username: this.username,
+          password: this.password,
+          email: this.email
+        });
+      }
     },
   },
 };

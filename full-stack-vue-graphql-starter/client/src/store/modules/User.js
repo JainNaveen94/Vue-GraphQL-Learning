@@ -4,7 +4,7 @@ import router from "../../router";
 import { DefaultClient as apolloClient } from "../../backend-client";
 
 /** Import POST Queries & Mutation */
-import { USER_LOGIN, GET_CURRENT_USER } from "../../api-queries";
+import { USER_LOGIN, GET_CURRENT_USER, USER_SIGNUP } from "../../api-queries";
 
 /** Vuex Store State which need to be Used or access or modified etc */
 let state = {
@@ -28,13 +28,14 @@ let getters = {
 
 /** Action are Asynchronous Methods to asynchronous calls mutations to perform task */
 let actions = {
-  // User Sign Action
+  // User Sign In Action
   signInUser: (context, payload) => {
     // Step 1 : Clear local storage
     localStorage.setItem("token", "");
     // Step 2 : Set some initial states datas
     context.commit("SET_LOADING", true, { root: true });
     context.commit("SET_ERROR", null, { root: true });
+    // Step 3 : Perform Action
     apolloClient
       .mutate({
         mutation: USER_LOGIN,
@@ -53,6 +54,32 @@ let actions = {
         context.commit("SET_LOADING", false, { root: true });
       });
   },
+  // User Sign Up Action
+  signUpUser: (context, payload) => {
+    // Step 1 : Clear local storage
+    localStorage.setItem("token", "");
+    // Step 2 : Set some initial states datas
+    context.commit("SET_LOADING", true, { root: true });
+    context.commit("SET_ERROR", null, { root: true });
+    // Step 3 : Perform Action
+    apolloClient
+      .mutate({
+        mutation: USER_SIGNUP,
+        variables: payload,
+      })
+      .then((res) => {
+        localStorage.setItem("token", res.data.signUpUser.token);
+        context.commit("SET_ERROR", null, { root: true });
+        // Just Navigate to Home Page
+        router.go();
+      })
+      .catch((err) => {
+        context.commit("SET_ERROR", err, { root: true });
+      })
+      .finally(() => {
+        context.commit("SET_LOADING", false, { root: true });
+      });
+  },
   // User Sign Out Action
   signOutUser: async (context) => {
     // Step 1 : Clear Current User
@@ -62,7 +89,7 @@ let actions = {
     // Step 3 : End the User Session
     await apolloClient.resetStore();
     // Step 4 : Kickout User from Private Page
-    router.push("/").catch(()=>{});
+    router.push("/").catch(() => {});
   },
   // Fetch Current User Action
   getCurrentUser: (context) => {
