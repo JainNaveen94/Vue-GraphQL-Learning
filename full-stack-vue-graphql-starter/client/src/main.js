@@ -11,6 +11,10 @@ import { DefaultClient as apolloClient } from "./backend-client";
 import VueApollo from "vue-apollo";
 Vue.use(VueApollo);
 
+/** Global Custom Component Imports */
+import FormAlert from "../src/components/common/FormAlert.vue";
+Vue.component('form-alert', FormAlert);
+
 /** Define Providers for Vue Apollo */
 const apolloProvider = new VueApollo({ apolloClient });
 

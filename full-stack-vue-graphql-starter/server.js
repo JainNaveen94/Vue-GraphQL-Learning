@@ -44,15 +44,16 @@ const getCurrentUser = async (token) => {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    formatError: (error) => {
+        return {
+            name: error.name,
+            message: error.message
+        }
+    },
     context: async ({req}) => {
         const token = req.headers['authorization'];
         return { User, Post, CurrentUser: await getCurrentUser(token)};
     },
-    /** Old Context */
-    // context: {
-    //     User,
-    //     Post
-    // }
 });
 
 /** Server Listing Configuration */
