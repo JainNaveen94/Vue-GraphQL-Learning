@@ -37,13 +37,6 @@ export default {
     this.handleGetCarouselPosts();
   },
   computed: {
-    /** Legacy Method to Get the Data From the Stores */
-    // posts() {
-    //   return this.$store.getters.POSTS;
-    // },
-    // loading() {
-    //   return this.$store.getters.LOADING;
-    // },
     /** Map Getter Will Get the Data For Us from the Vuex Store */
     ...mapGetters(['LOADING','POSTS'])
   },
