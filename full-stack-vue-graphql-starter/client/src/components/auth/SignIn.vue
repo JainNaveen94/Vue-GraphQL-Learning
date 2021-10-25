@@ -19,12 +19,18 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card color="secondary" dark>
           <v-container>
-            <v-form @submit.prevent="handlerUserLogin">
+            <v-form
+              v-model="isValid"
+              lazy-validation
+              ref="login"
+              @submit.prevent="handlerUserLogin"
+            >
               <!-- Username Input Field -->
               <v-layout>
                 <v-flex xs12>
                   <v-text-field
                     v-model="username"
+                    :rules="validationRules.username"
                     prepend-icon="mdi-emoticon"
                     label="Username"
                     type="text"
@@ -37,6 +43,7 @@
                 <v-flex xs12>
                   <v-text-field
                     v-model="password"
+                    :rules="validationRules.password"
                     prepend-icon="mdi-security"
                     label="Password"
                     type="password"
@@ -49,7 +56,7 @@
                 <v-flex xs12>
                   <v-btn
                     :loading="LOADING"
-                    :disabled="LOADING"
+                    :disabled="LOADING || !isValid"
                     color="primary"
                     type="submit"
                     >LogIn</v-btn
@@ -80,7 +87,22 @@ export default {
     return {
       username: "",
       password: "",
-      currentUser: null,
+      // Check for Form Validation
+      isValid: true,
+      validationRules: {
+        username: [
+          (v) => !!v || "Username is required for Login",
+          (v) =>
+            (v && v.length < 15) ||
+            "Username Should be equal to or less then 15 Character",
+        ],
+        password: [
+          (v) => !!v || "Please Enter Password for Login",
+          (v) =>
+            (v && v.length > 7) ||
+            "Password Length should be Greater then 7 Character",
+        ],
+      },
     };
   },
   computed: {
@@ -97,10 +119,12 @@ export default {
   methods: {
     handlerUserLogin() {
       /** Action to handle the User Login */
-      this.$store.dispatch("signInUser", {
-        username: this.username,
-        password: this.password,
-      });
+      if (this.$refs.login.validate()) {
+        this.$store.dispatch("signInUser", {
+          username: this.username,
+          password: this.password,
+        });
+      }
     },
   },
 };
