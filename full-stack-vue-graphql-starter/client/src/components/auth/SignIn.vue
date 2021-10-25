@@ -8,6 +8,13 @@
       </v-flex>
     </v-layout>
 
+    <!-- Sign In Form Alert -->
+    <v-layout v-if="ERROR" row wrap>
+      <v-flex xs12 sm6 offset-sm3>
+        <form-alert :message="ERROR.message"></form-alert>
+      </v-flex>
+    </v-layout>
+
     <!-- Login Form -->
     <v-layout row wrap>
       <v-flex xs12 sm6 offset-sm3>
@@ -48,8 +55,10 @@
 <script>
 /** Library Imports */
 import { mapGetters } from "vuex";
+import FormAlert from '../common/FormAlert.vue';
 
 export default {
+  components: { FormAlert },
   name: "SignIn",
   data() {
     return {
@@ -59,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["CURRENT_USER"])
+    ...mapGetters(["CURRENT_USER", "ERROR"])
   },
   watch: {
     /** if User Exist then move to Home Page */
