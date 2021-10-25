@@ -38,11 +38,12 @@
         <!-- Error Snackbar -->
          <snack-bar
           :snackbar="errorSnackbar"
-          message="You are now sign_in !!"
+          :message="AUTH_ERROR ? AUTH_ERROR : ''"
+          icon="mdi-cancel"
           :timeout="timeout"
           color="warning"
           actionName="SignIn"
-          @snackbar-action="errorSnackbar = false"
+          @snackbar-action="handlerUserSessionOut()"
         ></snack-bar>
 
       </v-container>
@@ -74,7 +75,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["CURRENT_USER"]),
+    ...mapGetters(["CURRENT_USER", "AUTH_ERROR"]),
     horizontalNavItems() {
       let items = [
         { icon: "mdi-message", title: "Posts", link: "/posts" },
@@ -103,10 +104,16 @@ export default {
     },
   },
   watch: {
-    // Manage the Login Snack bar for login success message
+    /** Manage the Login Snack bar for login success message */
     CURRENT_USER(newValue, oldValue) {
       if(oldValue !== newValue && oldValue === null) {
         this.logInSnackbar = true;
+      }
+    },
+    /** Authentication Error action - Session timeout management */
+    AUTH_ERROR(value) {
+      if(value !== null) {
+        this.errorSnackbar = true;
       }
     }
   },
@@ -119,6 +126,13 @@ export default {
       /** Action to Handle the Signout User */
       this.$store.dispatch("signOutUser");
     },
+    handlerUserSessionOut() {
+      /** Action to Handle the User Session Out */
+      // Step 1 : Clear local Storage
+      localStorage.setItem('token', '');
+      // Step 2 : Navigate to Sign in or Log in Page
+      this.$router.push('/sign_in')
+    }
   },
 };
 </script>
