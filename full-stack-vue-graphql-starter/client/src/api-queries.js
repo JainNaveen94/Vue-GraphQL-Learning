@@ -49,3 +49,15 @@ export const USER_LOGIN = gql`
     }
   }
 `;
+
+export const USER_SIGNUP = gql`
+  mutation($username: String!, $email: String!, $password: String!) {
+   signUpUser(
+     username: $username
+     email: $email
+     password: $password
+   ) {
+			token
+   }
+ }
+`;
